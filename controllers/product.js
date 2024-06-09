@@ -17,6 +17,9 @@ const createProduct = async (req, res) => {
     product.description = params.description;
     product.stock = params.stock;
 
+    console.log("product: ", req.body);
+    console.log("IMG:", req.files);
+
     if (req.files.image) {
         const imagePath = image.getFileName(req.files.image);
         product.image = imagePath;
