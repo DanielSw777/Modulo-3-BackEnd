@@ -1,11 +1,11 @@
 const express = require("express");
 const productController = require("../controllers/product");
 const md_authAdmin = require("../middlewares/authenticated");
+const fileUpload = require("express-fileupload");
 
 const api = express.Router();
 
-const multiparty = require("connect-multiparty");
-const md_upload = multiparty({uploadDir: "./uploads/products"});
+const md_upload = fileUpload({ useTempFiles: true, tempFileDir: "/products" });
 
 api.get("/products", productController.getProducts);
 api.post("/product", [md_authAdmin.asureAuthAdmin, md_upload], productController.createProduct);

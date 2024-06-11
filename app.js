@@ -30,9 +30,6 @@ const passwordResetRoutes = require("./router/passwordReset");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Configurar Static Folder
-app.use(express.static("uploads"));
-
 //Configurar Rutas
 app.use(`/api/${apiVersion}`, authAdminRoutes);
 app.use(`/api/${apiVersion}`, authUserRoutes);

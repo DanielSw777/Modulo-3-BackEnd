@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 const image = require("../utils/image");
 const fs = require("fs");
+const { uploadFile } = require("../utils/cloudinary");
 
 const ipServer = process.env.IP_SERVER;
 const port = process.env.PORT;
@@ -11,21 +12,21 @@ const apiVersion = process.env.API_VERSION;
 const createProduct = async (req, res) => {
     const product = new Product();
     const params = req.body;
-
-    product.name = params.name;
-    product.price = params.price;
-    product.description = params.description;
-    product.stock = params.stock;
-
-    console.log("product: ", req.body);
-    console.log("IMG:", req.files);
-
-    if (req.files.image) {
-        const imagePath = image.getFileName(req.files.image);
-        product.image = imagePath;
-    }
-
     try {
+        product.name = params.name;
+        product.price = params.price;
+        product.description = params.description;
+        product.stock = params.stock;
+
+        console.log(req.files.image.tempFilePath);
+        if (req.files?.image) {
+            const result = await uploadFile(req.files.image.tempFilePath);
+            product.image = {
+                public_id: result.public_id,
+                secure_url: result.secure_url
+            }
+        }
+
         await product.save();
         res.status(201).send({ msg: 'Producto creado exitosamente', product });
     } catch (error) {
