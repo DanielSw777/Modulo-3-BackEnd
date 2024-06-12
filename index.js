@@ -20,10 +20,10 @@ const connectDB = async () => {
             console.log("==================================");
             console.log(`http://${ipServer}:${Port}/api/${apiVersion}/`);
         });
+        initializeSuperAdmin();
     } catch (error) {
         console.error("Error al conectar a la base de datos", error);
     }
 };
 
 connectDB();
-initializeSuperAdmin();
