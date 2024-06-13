@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { exec } = require('child_process');
 const mongoose = require("mongoose");
 const app = require("./app");
 const { initializeSuperAdmin } = require("./utils/initializeAdmin");
@@ -22,19 +21,6 @@ const connectDB = async () => {
             console.log(`http://${ipServer}:${Port}/api/${apiVersion}/`);
         });
         initializeSuperAdmin();
-
-        exec('curl ifconfig.me', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error ejecutando curl: ${error.message}`);
-                return;
-            }
-            if (stderr) {
-                console.error(`stderr: ${stderr}`);
-                return;
-            }
-            console.log(`La IP pública es: ${stdout.trim()}`);
-        });
-
     } catch (error) {
         console.error("Error al conectar a la base de datos", error);
     }
