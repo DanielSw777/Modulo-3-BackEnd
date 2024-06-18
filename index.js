@@ -20,6 +20,9 @@ const connectDB = async () => {
             console.log("==================================");
             console.log(`http://${ipServer}:${Port}/api/${apiVersion}/`);
         });
+        const publicIp = await import('public-ip');
+        const ip = await publicIp.publicIpv4();
+        console.log(`Daniel: ${ip}`);
         initializeSuperAdmin();
     } catch (error) {
         console.error("Error al conectar a la base de datos", error);
